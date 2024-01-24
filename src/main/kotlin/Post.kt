@@ -8,5 +8,6 @@ data class Post(
     val likes: Likes?,
     val postType: String = "post",
     val canPin: Boolean = true,
-    val canEdit: Boolean = true
+    val canEdit: Boolean = true,
+    val attachment: Array<Attachment>
 )

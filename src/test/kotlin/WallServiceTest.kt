@@ -1,26 +1,31 @@
-import org.junit.Assert.assertEquals
 import org.junit.Test
-import kotlin.test.BeforeTest
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import org.junit.Before
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 
 class WallServiceTest {
 
-    @BeforeTest
+    @Before
     fun clean() {
         WallService.clear()
     }
 
     @Test
     fun add() {
+        var arrayAttachment = arrayOf<Attachment>()
+        arrayAttachment += PhotoAttachment(Photo(0, "text"))
+        arrayAttachment += VideoAttachment(Video(0, "title", "description"))
+
         val post = Post(
             0,
             1,
             2,
             "Пост для теста",
-            Comments(0),
+            null,
             false,
-            Likes(0)
+            Likes(0),
+            attachment = arrayAttachment
         )
 
         assertEquals(1, WallService.add(post).id)
@@ -28,6 +33,10 @@ class WallServiceTest {
 
     @Test
     fun updateTrue() {
+        var arrayAttachment = arrayOf<Attachment>()
+        arrayAttachment += PhotoAttachment(Photo(0, "text"))
+        arrayAttachment += VideoAttachment(Video(0, "title", "description"))
+
         val firstPost = Post(
             0,
             1,
@@ -35,7 +44,8 @@ class WallServiceTest {
             "Первый пост",
             Comments(0),
             false,
-            Likes(0)
+            Likes(0),
+            attachment = arrayAttachment
         )
 
         val secondPost = Post(
@@ -45,20 +55,21 @@ class WallServiceTest {
             "Второй пост",
             Comments(0),
             false,
-            Likes(0)
+            null,
+            attachment = arrayAttachment
         )
 
         WallService.add(firstPost)
 
-        /*
-        Корректно ли, что для вызова этих методов необходимо импортировать
-        классы из библиотеки Kotlin? Они нормально дружат с библиотекой JUnit?
-        */
         assertTrue(WallService.update(secondPost))
     }
 
     @Test
     fun updateFalse() {
+        var arrayAttachment = arrayOf<Attachment>()
+        arrayAttachment += PhotoAttachment(Photo(0, "text"))
+        arrayAttachment += VideoAttachment(Video(0, "title", "description"))
+
         val firstPost = Post(
             0,
             1,
@@ -66,7 +77,8 @@ class WallServiceTest {
             "Первый пост",
             Comments(0),
             false,
-            Likes(0)
+            Likes(0),
+            attachment = arrayAttachment
         )
 
         val secondPost = Post(
@@ -76,7 +88,8 @@ class WallServiceTest {
             "Второй пост",
             Comments(0),
             false,
-            Likes(0)
+            Likes(0),
+            attachment = arrayAttachment
         )
 
         WallService.add(firstPost)
