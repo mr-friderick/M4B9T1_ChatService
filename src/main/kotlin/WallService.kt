@@ -1,3 +1,5 @@
+import java.lang.Exception
+
 object WallService {
     var arrayPosts = emptyArray<Post>()
     private var postId = 1
@@ -22,5 +24,15 @@ object WallService {
             }
         }
         return false
+    }
+
+    fun createComment(postId: Int, comment: Comment): Comment {
+        for (post in arrayPosts) {
+            if (post.id == postId) {
+                post.comments += comment
+                return comment
+            }
+        }
+        throw PostNotFoundException("Не найдено ни одного поста с id $postId")
     }
 }

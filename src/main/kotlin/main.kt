@@ -8,11 +8,10 @@ fun main() {
         0,
         0,
         "text",
-        Comments(0),
         true,
         null,
         attachment = arrayAttachment)
 
     WallService.add(newPost)
-    println(WallService.arrayPosts[0].attachment[0].type)
+    println(WallService.createComment(1, Comment(0, true, "text")))
 }
