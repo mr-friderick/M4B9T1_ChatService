@@ -1,8 +1,12 @@
 import java.lang.Exception
+import javax.print.attribute.standard.JobStateReason
 
 object WallService {
     var arrayPosts = emptyArray<Post>()
-    private var postId = 1
+    var arrayReports = emptyArray<Report>()
+
+    private var postId   = 1
+    private var reportId = 1
 
     fun clear() {
         arrayPosts = emptyArray()
@@ -34,5 +38,25 @@ object WallService {
             }
         }
         throw PostNotFoundException("Не найдено ни одного поста с id $postId")
+    }
+
+    fun reportComment(commentId: Int, reason: Int) : Int {
+        if (reason !in 0..8) throw ReasonNotFoundException(
+            "Допустимо указать значение от 0 до 8 включительно")
+
+        for (post in arrayPosts) {
+            for (comment in post.comments) {
+                if (comment.id == commentId) {
+                    arrayReports += Report(
+                        id = reportId,
+                        reason = reason,
+                        comment = comment
+                    )
+                    reportId++
+                    return 1
+                }
+            }
+        }
+        throw CommentNotFoundException("Не найден комментарий по id $commentId")
     }
 }

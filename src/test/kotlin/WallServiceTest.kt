@@ -108,7 +108,7 @@ class WallServiceTest {
     }
 
     @Test(expected = PostNotFoundException::class)
-    fun shouldThrow() {
+    fun shouldThrowCreateComment() {
         val comment = Comment(
             id = 0,
             text = "text"
@@ -120,4 +120,67 @@ class WallServiceTest {
         )
     }
 
+    @Test
+    fun reportComment() {
+        val newPost = Post(
+            id = 0,
+            ownerId = 1,
+            text = "text",
+            likes = Likes(0)
+        )
+
+        val comment = Comment(
+            id = 0,
+            text = "text"
+        )
+
+        WallService.add(newPost)
+        WallService.createComment(
+                postId = 1,
+                comment = comment
+        )
+        assertEquals(
+            1,
+            WallService.reportComment(
+                commentId = 0,
+                reason = 6
+            )
+        )
+    }
+
+    @Test(expected = ReasonNotFoundException::class)
+    fun shouldThrowReasonReportComment() {
+        WallService.reportComment(
+            commentId = 0,
+            reason = 10
+        )
+    }
+
+    @Test(expected = CommentNotFoundException::class)
+    fun shouldThrowCommentReportComment() {
+        val newPost = Post(
+            id = 0,
+            ownerId = 1,
+            text = "text",
+            likes = Likes(0)
+        )
+
+        val comment = Comment(
+            id = 0,
+            text = "text"
+        )
+
+        WallService.add(newPost)
+        WallService.createComment(
+            postId = 1,
+            comment = comment
+        )
+        assertEquals(
+            1,
+            WallService.reportComment(
+                commentId = 1,
+                reason = 6
+            )
+        )
+    }
 }
