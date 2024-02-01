@@ -18,13 +18,10 @@ class WallServiceTest {
         arrayAttachment += VideoAttachment(Video(0, "title", "description"))
 
         val post = Post(
-            0,
-            1,
-            2,
-            "Пост для теста",
-            null,
-            false,
-            Likes(0),
+            id = 0,
+            ownerId = 1,
+            text = "text",
+            likes = Likes(0),
             attachment = arrayAttachment
         )
 
@@ -38,24 +35,18 @@ class WallServiceTest {
         arrayAttachment += VideoAttachment(Video(0, "title", "description"))
 
         val firstPost = Post(
-            0,
-            1,
-            2,
-            "Первый пост",
-            Comments(0),
-            false,
-            Likes(0),
+            id = 0,
+            ownerId = 1,
+            text = "text1",
+            likes = Likes(0),
             attachment = arrayAttachment
         )
 
         val secondPost = Post(
-            1,
-            1,
-            2,
-            "Второй пост",
-            Comments(0),
-            false,
-            null,
+            id = 1,
+            ownerId = 1,
+            text = "text2",
+            likes = Likes(0),
             attachment = arrayAttachment
         )
 
@@ -71,24 +62,18 @@ class WallServiceTest {
         arrayAttachment += VideoAttachment(Video(0, "title", "description"))
 
         val firstPost = Post(
-            0,
-            1,
-            2,
-            "Первый пост",
-            Comments(0),
-            false,
-            Likes(0),
+            id = 0,
+            ownerId = 1,
+            text = "text1",
+            likes = Likes(0),
             attachment = arrayAttachment
         )
 
         val secondPost = Post(
-            2,
-            1,
-            2,
-            "Второй пост",
-            Comments(0),
-            false,
-            Likes(0),
+            id = 0,
+            ownerId = 1,
+            text = "text2",
+            likes = Likes(0),
             attachment = arrayAttachment
         )
 
@@ -96,4 +81,43 @@ class WallServiceTest {
 
         assertFalse(WallService.update(secondPost))
     }
+
+    @Test
+    fun createComment() {
+        val newPost = Post(
+            id = 0,
+            ownerId = 1,
+            text = "text",
+            likes = Likes(0)
+        )
+
+        val comment = Comment(
+            id = 0,
+            text = "text"
+        )
+
+        WallService.add(newPost)
+
+        assertEquals(
+            comment,
+            WallService.createComment(
+                postId = 1,
+                comment = comment
+            )
+        )
+    }
+
+    @Test(expected = PostNotFoundException::class)
+    fun shouldThrow() {
+        val comment = Comment(
+            id = 0,
+            text = "text"
+        )
+
+        WallService.createComment(
+            postId = 1,
+            comment = comment
+        )
+    }
+
 }

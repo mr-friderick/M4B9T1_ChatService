@@ -1,5 +1,5 @@
 data class Comment(
-    val count: Int,
+    val id: Int,
     val canPost: Boolean = true,
     val text: String
 )
