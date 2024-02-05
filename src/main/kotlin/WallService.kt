@@ -1,22 +1,18 @@
-import java.lang.Exception
-import javax.print.attribute.standard.JobStateReason
-
 object WallService {
     var arrayPosts = emptyArray<Post>()
     var arrayReports = emptyArray<Report>()
 
-    private var postId   = 1
-    private var reportId = 1
+    private var postId   = 0
+    private var reportId = 0
 
     fun clear() {
         arrayPosts = emptyArray()
-        postId = 1
+        postId     = 0
+        reportId   = 0
     }
 
     fun add(post: Post): Post {
-        arrayPosts += post.copy(id = postId)
-        postId += 1
-
+        arrayPosts += post.copy(id = postId++)
         return arrayPosts.last()
     }
 
@@ -48,11 +44,10 @@ object WallService {
             for (comment in post.comments) {
                 if (comment.id == commentId) {
                     arrayReports += Report(
-                        id = reportId,
+                        id = reportId++,
                         reason = reason,
                         comment = comment
                     )
-                    reportId++
                     return 1
                 }
             }
