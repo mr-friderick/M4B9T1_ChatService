@@ -2,13 +2,13 @@ object WallService {
     var arrayPosts = emptyArray<Post>()
     var arrayReports = emptyArray<Report>()
 
-    private var postId   = 0
-    private var reportId = 0
+    private var postId   = 1
+    private var reportId = 1
 
     fun clear() {
         arrayPosts = emptyArray()
-        postId     = 0
-        reportId   = 0
+        postId     = 1
+        reportId   = 1
     }
 
     fun add(post: Post): Post {
