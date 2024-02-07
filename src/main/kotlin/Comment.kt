@@ -4,6 +4,11 @@ data class Comment(
     val text: String
 )
 
+data class NoteComment(
+    val id: Int,
+    var message: String
+)
+
 data class Report(
     val id: Int,
     val reason: Int,
