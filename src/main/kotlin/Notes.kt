@@ -6,10 +6,10 @@ object Notes {
     var mapDeleteComments = mutableMapOf<Int, Map<Int, NoteComment>>()
 
     fun clear() {
-        listNotes         = mutableListOf()
+        listNotes = mutableListOf()
         mapDeleteComments = mutableMapOf()
-        noteId            = 0
-        noteCommentId     = 0
+        noteId = 0
+        noteCommentId = 0
     }
 
     fun add(title: String, text: String, privacy: Int = 0, commentPrivacy: Int = 0): Int {
@@ -33,6 +33,17 @@ object Notes {
 
     fun delete(noteId: Int): Int {
         val note = listNotes.find { it.id == noteId } ?: throw NoteNotFoundException("Не найдена Заметка с id $noteId")
+
+        // Т.к. удаляем заметку, то нужно удалить связанные с ней удаленные комментарии
+        val keysForDelete = HashSet<Int>()
+        for ((key, value) in mapDeleteComments) {
+            if (value.keys.first() == noteId) {
+                keysForDelete.add(key)
+            }
+        }
+        for (key in keysForDelete) {
+            mapDeleteComments.remove(key)
+        }
         listNotes.remove(note)
         return 1
         /*
@@ -112,8 +123,11 @@ object Notes {
         val mapComment = mapDeleteComments.get(commentId)
             ?: throw NoteCommentNotFoundException("Не найден Комментарий заметки с id $commentId")
         val note = listNotes.find { it.id == mapComment.keys.first() }
-            ?: throw NoteNotFoundException("Заметка, в которой был комментарий, удалена")
-        note.comments.add(mapComment[mapComment.keys.first()]!!)
+        note!!.comments.add(mapComment[mapComment.keys.first()]!!)
         return 1
+        /*
+        Не уверен, корректно ли, что я использую операторы !! здесь?
+        По логики программы, у меня никак не может быть здесь null, это контролируется, но IDE ругается.
+        */
     }
 }

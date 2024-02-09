@@ -44,12 +44,9 @@ fun main() {
     }
 
     // - 1
-    Notes.delete(1)
-
-    // - 1
     Notes.deleteComment(1)
 
-    println("-------------------------------")
+    println("----------------------------------------")
     val listNotes1 = Notes.get("0,1,2")
     for (note in listNotes1) {
         println(note.toString())
@@ -59,18 +56,10 @@ fun main() {
         println()
     }
 
-    Notes.edit(
-        noteId = 0,
-        title = "title_new",
-        text = "text_new"
-    )
+    // - 1
+    Notes.delete(0)
 
-    Notes.editComment(
-        commentId = 0,
-        message = "message_new"
-    )
-
-    println("-------------------------------")
+    println("----------------------------------------")
     val listNotes2 = Notes.get("0,1,2")
     for (note in listNotes2) {
         println(note.toString())
@@ -80,21 +69,57 @@ fun main() {
         println()
     }
 
-    val listNotes3434 = Notes.get("0,2")
-
-    val note = Notes.getById(2)
-
-    val listComments = Notes.getComments(0)
-
     Notes.restoreComment(1)
 
-    println("-------------------------------")
-    val listNotes3 = Notes.get("0,1,2")
-    for (note in listNotes3) {
-        println(note.toString())
-        for (comment in note.comments) {
-            println(comment.toString())
-        }
-        println()
-    }
+//    // - 1
+//    Notes.deleteComment(1)
+//
+//    println("-------------------------------")
+//    val listNotes1 = Notes.get("0,1,2")
+//    for (note in listNotes1) {
+//        println(note.toString())
+//        for (comment in note.comments) {
+//            println(comment.toString())
+//        }
+//        println()
+//    }
+//
+//    Notes.edit(
+//        noteId = 0,
+//        title = "title_new",
+//        text = "text_new"
+//    )
+//
+//    Notes.editComment(
+//        commentId = 0,
+//        message = "message_new"
+//    )
+//
+//    println("-------------------------------")
+//    val listNotes2 = Notes.get("0,1,2")
+//    for (note in listNotes2) {
+//        println(note.toString())
+//        for (comment in note.comments) {
+//            println(comment.toString())
+//        }
+//        println()
+//    }
+//
+//    val listNotes3434 = Notes.get("0,2")
+//
+//    val note = Notes.getById(2)
+//
+//    val listComments = Notes.getComments(0)
+//
+//    Notes.restoreComment(1)
+//
+//    println("-------------------------------")
+//    val listNotes3 = Notes.get("0,1,2")
+//    for (note in listNotes3) {
+//        println(note.toString())
+//        for (comment in note.comments) {
+//            println(comment.toString())
+//        }
+//        println()
+//    }
 }

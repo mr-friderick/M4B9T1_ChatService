@@ -1,3 +1,3 @@
-# Задачи 1-3
+# Задача 1
 
-Описание задач https://github.com/netology-code/kt-homeworks/tree/master/07_exceptions
+Описание задачи https://github.com/netology-code/kt-homeworks/tree/master/08_collections

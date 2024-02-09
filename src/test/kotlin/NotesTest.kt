@@ -193,17 +193,4 @@ class NotesTest {
     fun shouldThrowNoteCommentRestoreComment() {
         Notes.restoreComment(0)
     }
-
-    @Test(expected = NoteNotFoundException::class)
-    fun shouldThrowNoteRestoreComment() {
-        Notes.add(
-            title = "title1", text = "text1"
-        )
-        Notes.createComment(
-            noteId = 0, message = "message"
-        )
-        Notes.deleteComment(0)
-        Notes.delete(0)
-        Notes.restoreComment(0)
-    }
 }
