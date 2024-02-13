@@ -14,3 +14,9 @@ data class Report(
     val reason: Int,
     val comment: Comment
 )
+
+data class ChatMessage(
+    val id: Int,
+    val text: String,
+    val read: Boolean = false
+)
