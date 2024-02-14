@@ -18,5 +18,5 @@ data class Report(
 data class ChatMessage(
     val id: Int,
     val text: String,
-    val read: Boolean = false
+    var read: Boolean = false
 )

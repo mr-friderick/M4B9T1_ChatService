@@ -8,10 +8,10 @@ object ChatService {
          listChat.find { it.id == chatId }
             ?: throw ChatNotFoundException("Не найден чат с id $chatId")
 
-    fun sendMessage(idFirst: Int, idSecond: Int, messageText: String) {
-        var chat = listChat.find { it.idFirstPerson == idFirst || it.idSecondPerson == idSecond }
+    fun sendMessage(ownerId: Int, companionId: Int, messageText: String) {
+        var chat = listChat.find { it.ownerId == ownerId && it.companionId == companionId }
         if (chat == null) {
-            chat = Chat(id = chatId++, idFirstPerson = idFirst, idSecondPerson = idSecond)
+            chat = Chat(id = chatId++, ownerId = ownerId, companionId = companionId)
             listChat.add(chat)
         }
         chat.messages.add(
@@ -45,5 +45,13 @@ object ChatService {
         }
     }
 
-
+    fun getAllMessage(companionId: Int, count: Int) : List<ChatMessage> {
+        val chat = listChat.find { it.companionId == companionId }
+            ?: throw ChatNotFoundException("Не найден чат с собеседником $companionId")
+        val listMessage = chat.messages.takeLast(count)
+        for (message in listMessage) {
+            message.read = true
+        }
+        return listMessage
+    }
 }

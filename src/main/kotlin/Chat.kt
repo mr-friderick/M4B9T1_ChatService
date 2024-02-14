@@ -1,6 +1,6 @@
 data class Chat(
     val id: Int,
-    val idFirstPerson: Int,
-    val idSecondPerson: Int,
+    val ownerId: Int,
+    val companionId: Int,
     val messages: MutableList<ChatMessage> = mutableListOf()
 )
