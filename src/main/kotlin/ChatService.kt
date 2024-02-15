@@ -1,6 +1,3 @@
-/*
-По общей логики приложения сделал так, что если метод выполняется успешно - возвращается 1
-*/
 object ChatService {
     private var chatId = 0
     private var messageId = 0
@@ -29,19 +26,12 @@ object ChatService {
         return 1
     }
 
-    fun deleteMessage(chatId: Int, messageId: Int) : Int {
-        val chat = listChat.findChatById(chatId)
-        val message = chat.messages.find { it.id == messageId }
-            ?: throw ChatMessageNotFoundException("Не найдено сообщение с id $messageId")
-        chat.messages.remove(message)
-        return 1
-    }
+    fun deleteMessage(chatId: Int, messageId: Int) : Boolean =
+        listChat
+            .findChatById(chatId)
+            .messages.removeIf { it.id == messageId }
 
-    fun deleteChat(chatId: Int) : Int {
-        val chat = listChat.findChatById(chatId)
-        listChat.remove(chat)
-        return 1
-    }
+    fun deleteChat(chatId: Int) : Boolean = listChat.removeIf { it.id == chatId }
 
     fun getUnreadChatsCount() : Int = listChat.count { it.messages.any { !it.read } }
 
@@ -57,13 +47,10 @@ object ChatService {
         }
     }
 
-    fun getMessagesByCompanion(companionId: Int, count: Int) : List<ChatMessage> {
-        val chat = listChat.find { it.companionId == companionId }
-            ?: throw ChatNotFoundException("Не найден чат с собеседником $companionId")
-        val listMessage = chat.messages.takeLast(count)
-        for (message in listMessage) {
-            message.read = true
-        }
-        return listMessage
-    }
+    fun getMessagesByCompanion(companionId: Int, count: Int) : List<ChatMessage> =
+        listChat.asSequence()
+            .first { it.companionId == companionId }
+            .let { it.messages.toList() }
+            .takeLast(count)
+            .onEach { it.read = true }
 }
