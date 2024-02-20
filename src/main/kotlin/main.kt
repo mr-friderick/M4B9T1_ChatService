@@ -13,14 +13,17 @@ fun main() {
     println(ChatService.getUnreadChatsCount())
 
     println()
-    println(ChatService.getLastMessages(5, 1))
+    println("------getLastMessages------")
+    println(ChatService.getLastMessages(0, 5))
 
-    println("getMessagesByCompanion")
-    println(ChatService.getMessagesByCompanion(0, 5))
+    println()
+    println("------getMessagesByCompanion------")
+    println(ChatService.getMessagesByCompanion(0, 1))
     println(ChatService.getMessagesByCompanion(1, 5))
     println(ChatService.getMessagesByCompanion(0, 5))
 
     println()
+    println("------getUnreadChatsCount------")
     println(ChatService.getUnreadChatsCount())
 
     ChatService.deleteMessage(0, 1)

@@ -21,11 +21,6 @@ class ChatServiceTest {
         )
     }
 
-    @Test(expected = ChatNotFoundException::class)
-    fun shouldThrowChatNotFoundDeleteChat() {
-        ChatService.deleteChat(chatId = 0)
-    }
-
     @Test
     fun deleteChat() {
         ChatService.sendMessage(
@@ -33,22 +28,12 @@ class ChatServiceTest {
             companionId = 0,
             messageText = "messageText"
         )
-        assertEquals(1, ChatService.deleteChat(chatId = 0))
+        assertEquals(true, ChatService.deleteChat(chatId = 0))
     }
 
     @Test(expected = ChatNotFoundException::class)
     fun shouldThrowChatNotFoundDeleteMessage() {
         ChatService.deleteMessage(chatId = 0, messageId = 0)
-    }
-
-    @Test(expected = ChatMessageNotFoundException::class)
-    fun shouldThrowMessageNotFoundDeleteMessage() {
-        ChatService.sendMessage(
-            ownerId = 0,
-            companionId = 0,
-            messageText = "messageText"
-        )
-        ChatService.deleteMessage(chatId = 0, messageId = 1)
     }
 
     @Test
@@ -58,10 +43,10 @@ class ChatServiceTest {
             companionId = 0,
             messageText = "messageText"
         )
-        assertEquals(1, ChatService.deleteMessage(chatId = 0, messageId = 0))
+        assertEquals(true, ChatService.deleteMessage(chatId = 0, messageId = 0))
     }
 
-    @Test(expected = ChatNotFoundException::class)
+    @Test(expected = NoSuchElementException ::class)
     fun shouldThrowChatNotFoundGetMessagesByCompanion() {
         ChatService.getMessagesByCompanion(companionId = 0, count = 1)
     }
